@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ff6fae">
+<title>Birthday Countdown 🎉</title>
+<style>
+:root{--pink:#ff6fae;--purple:#8b5cf6;--ink:#47233d;--soft:#fff0f7}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,sans-serif;background:linear-gradient(135deg,#ffe0ef,#f4e5ff,#dff5ff);overflow-x:hidden;transition:background .4s}
+body[data-theme=purple]{--pink:#a78bfa;--purple:#6366f1;--ink:#30245b;--soft:#f0edff;background:linear-gradient(135deg,#e9ddff,#dce8ff,#fce4ff)}
+body[data-theme=blue]{--pink:#60a5fa;--purple:#0ea5e9;--ink:#163c60;--soft:#eaf6ff;background:linear-gradient(135deg,#d9f1ff,#e4e8ff,#e0fff7)}
+body[data-theme=sunset]{--pink:#fb923c;--purple:#ec4899;--ink:#65301e;--soft:#fff1e5;background:linear-gradient(135deg,#ffe0bd,#ffd6e7,#fff0b8)}
+.wrap{width:min(940px,92vw);margin:auto;padding:25px 0 42px;position:relative}header{text-align:center;padding:12px 8px 20px}.eyebrow{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--purple)}
+h1{font-size:clamp(2.2rem,8vw,4.5rem);line-height:1;margin:12px 0;letter-spacing:-.05em;text-shadow:0 3px 0 #fff,0 8px 25px #e68bc566;transform:perspective(500px) rotateX(8deg)}
+.subtitle{opacity:.8}.card{background:#ffffffdf;border:1px solid #ffffffec;border-radius:26px;padding:clamp(18px,4vw,30px);box-shadow:0 18px 55px #5a2d641f;backdrop-filter:blur(12px)}
+.cake{text-align:center;font-size:clamp(3rem,10vw,5rem);margin:6px 0 15px;filter:drop-shadow(0 7px 8px #e9a2c866)}
+.sparkle-ring{position:relative;width:fit-content;margin:auto}.sparkle{position:absolute;left:50%;top:50%;color:#ffd84d;font-size:19px;text-shadow:0 0 12px white;animation:orbit 3.5s linear infinite}
+@keyframes orbit{to{transform:rotate(360deg) translateX(120px) rotate(-360deg)}}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.unit{background:var(--soft);border-radius:18px;padding:17px 7px;text-align:center;transition:transform .2s}.number{display:block;font-size:clamp(2rem,7vw,3.4rem);font-weight:900;line-height:1.05;color:var(--purple);font-variant-numeric:tabular-nums;animation:glow 3s infinite alternate}
+@keyframes glow{to{color:var(--pink);text-shadow:0 0 14px #ff80bd88}}.unit span:last-child{display:block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-top:7px}
+.flip{animation:flip .4s ease}@keyframes flip{50%{transform:rotateX(90deg);opacity:.2}}
+.countdown.classic{display:flex;justify-content:center;gap:12px}.classic .unit{border:2px solid var(--pink);border-radius:50%;width:clamp(68px,17vw,125px);aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;background:transparent}
+.countdown.neon .unit{background:#1d1236;box-shadow:0 0 18px #b66cff88}.neon .number{color:white;text-shadow:0 0 8px #ff71c8,0 0 20px #a78bfa}
+.countdown.compact{grid-template-columns:repeat(4,auto);justify-content:center;gap:6px}.compact .unit{padding:10px}.compact .number{font-size:clamp(1.5rem,5vw,2.4rem)}
+#message{text-align:center;font-size:1.2rem;font-weight:850;min-height:1.8em}.age{text-align:center;font-weight:700}.age strong{color:var(--purple)}
+button{border:0;border-radius:999px;padding:11px 16px;background:linear-gradient(100deg,var(--pink),var(--purple));color:white;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 16px #9c5aa533;position:relative;overflow:hidden}
+button:after{content:"";position:absolute;inset:-60%;background:linear-gradient(110deg,transparent 40%,#ffffff88 50%,transparent 60%);transform:translateX(-100%);animation:shine 3s infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}button.secondary{background:white;color:var(--ink);border:1px solid #ead8eb;box-shadow:none}
+.actions{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:17px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:16px}
+h2{font-size:1.1rem;margin:0 0 12px}label{display:block;font-size:.9rem;font-weight:750;margin:10px 0 6px}
+input,select{width:100%;padding:11px;border:1px solid #e7d7e7;border-radius:12px;background:white;color:#30223a;font:inherit}
+.hint{font-size:.8rem;opacity:.72;line-height:1.45}.music-controls{display:flex;gap:8px;margin-top:10px}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}.effects{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:10}
+.lights{position:fixed;top:0;left:0;right:0;height:9px;z-index:15;pointer-events:none;background:repeating-linear-gradient(90deg,#ff4d9d 0 12px,transparent 12px 28px,#ffd84d 28px 40px,transparent 40px 56px,#4dd9ff 56px 68px,transparent 68px 84px);animation:blink 1s infinite alternate}
+@keyframes blink{to{opacity:.5;filter:brightness(1.5) drop-shadow(0 0 9px white)}}
+.star{position:fixed;width:110px;height:2px;background:linear-gradient(90deg,transparent,white,#ffe27a);box-shadow:0 0 12px white;transform:rotate(-28deg);animation:shoot 1.1s linear forwards}
+@keyframes shoot{to{transform:translate(-65vw,55vh) rotate(-28deg);opacity:0}}
+.float{position:fixed;bottom:-50px;z-index:12;pointer-events:none;font-size:28px;animation:float 5s ease-in forwards}@keyframes float{to{transform:translateY(-115vh) rotate(35deg);opacity:0}}
+.flash{position:fixed;inset:0;background:white;z-index:18;pointer-events:none;animation:flash .45s forwards}@keyframes flash{to{opacity:0}}
+.glitter{position:fixed;z-index:25;pointer-events:none;animation:glit .8s forwards}@keyframes glit{to{transform:translate(var(--dx),var(--dy)) scale(.1) rotate(160deg);opacity:0}}
+.snow{position:fixed;top:-20px;z-index:9;color:white;pointer-events:none;animation:snow 8s linear forwards}@keyframes snow{to{transform:translate(var(--drift),110vh) rotate(360deg);opacity:.2}}
+.fire{position:fixed;width:7px;height:7px;border-radius:50%;z-index:28;pointer-events:none;box-shadow:0 0 10px currentColor;animation:fire .9s forwards}@keyframes fire{to{transform:translate(var(--x),var(--y)) scale(.1);opacity:0}}
+#playground{position:relative;min-height:145px;border:2px dashed #e7c9e7;border-radius:18px;margin-top:14px;overflow:hidden;background:#fff8fc}
+.balloon{position:absolute;font-size:42px;cursor:grab;touch-action:none;user-select:none}.bubble{position:absolute;width:52px;height:52px;border-radius:50%;border:2px solid white;background:radial-gradient(circle at 30% 25%,white,#8be5ff88 35%,#a98aff88 75%);box-shadow:inset -5px -7px 12px #7a8aff33;cursor:pointer;animation:bob 2.4s infinite alternate}
+@keyframes bob{to{transform:translateY(-10px) scale(1.05)}}.birthday-card{width:min(320px,100%);height:185px;margin:18px auto;perspective:900px;cursor:pointer}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .8s}.birthday-card.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;inset:0;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;backface-visibility:hidden;background:linear-gradient(135deg,#ff8fbd,#9b7bff);color:white;text-align:center;padding:16px;box-shadow:0 12px 28px #63345a33}
+.card-back{transform:rotateY(180deg);background:linear-gradient(135deg,#ffb84d,#ff69a8,#8b5cf6)}
+.big{position:fixed;inset:0;z-index:30;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,#fff8d8ee,#ff8fc9ee 55%,#8b5cf6ee);color:white;padding:24px;animation:pop .7s both}
+.big h2{font-size:clamp(3rem,13vw,8rem);line-height:.95;text-shadow:0 8px 0 #b43d8a,0 0 30px white}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.rainbow{animation:rainbow 2s linear infinite}@keyframes rainbow{0%,100%{background:linear-gradient(135deg,#ffb7d5,#ffe6a8,#c8f7ff)}50%{background:linear-gradient(135deg,#e6c8ff,#c8ffd9,#ffe6a8)}}
+.ultimate .card{animation:pulse 1s infinite alternate}@keyframes pulse{to{box-shadow:0 0 35px #ff74cb88,0 0 65px #8b5cf688}}
+footer{text-align:center;opacity:.65;font-size:.8rem;padding:22px 8px}
+@media(max-width:580px){.wrap{padding-top:15px}.countdown{gap:6px}.unit{padding:13px 3px}.unit span:last-child{font-size:.64rem}.grid{grid-template-columns:1fr}.card{border-radius:21px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head>
+<body data-theme="party">
+<canvas id="confetti"></canvas><div class="effects" id="effects"></div><div class="lights"></div>
+<main class="wrap">
+<header><div class="eyebrow">A little countdown magic</div><h1>Birthday Countdown 🎉</h1><p class="subtitle">The party is getting closer!</p></header>
+<section class="card">
+<div class="sparkle-ring"><span class="sparkle">✦</span><span class="sparkle" style="animation-delay:-1.1s">✧</span><span class="sparkle" style="animation-delay:-2.2s">✦</span><div class="cake">🎂🎈</div></div>
+<div id="message" role="status" aria-live="polite">Getting the party ready…</div>
+<div class="countdown" id="countdown"><div class="unit"><strong class="number" id="days">--</strong><span>Days</span></div><div class="unit"><strong class="number" id="hours">--</strong><span>Hours</span></div><div class="unit"><strong class="number" id="minutes">--</strong><span>Minutes</span></div><div class="unit"><strong class="number" id="seconds">--</strong><span>Seconds</span></div></div>
+<p class="age" id="ageText">Add your birth year below to show your birthday age.</p>
+<div class="actions"><button id="celebrate">🎊 Celebrate!</button><button class="secondary" id="notify">🔔 Enable birthday alert</button></div>
+</section>
+<div class="grid">
+<section class="card"><h2>🎨 Make it yours</h2>
+<label for="theme">Color theme</label><select id="theme"><option value="party">Birthday party</option><option value="purple">Purple dream</option><option value="blue">Blue celebration</option><option value="sunset">Sunset party</option></select>
+<div class="actions"><button class="secondary" id="preview">👀 Preview theme</button><button id="apply">✓ Apply theme</button></div><p class="hint" id="themeStatus">Preview a theme before applying it.</p>
+<label for="accent">Accent color</label><input id="accent" type="color" value="#ff6fae"><label for="bg">Background color</label><input id="bg" type="color" value="#ffe0ef"><button class="secondary" id="customColors">Apply custom colors</button>
+<label for="birthDate">Birthday month and day</label><input id="birthDate" type="date" value="2000-11-09"><label for="birthYear">Birth year (age counter)</label><input id="birthYear" type="number" min="1900" max="2100" placeholder="Enter birth year"><p class="hint">Birthday, year and theme settings are saved in this browser.</p></section>
+<section class="card"><h2>🎵 Birthday music</h2><label for="musicFile">Choose an audio file from your device</label><input id="musicFile" type="file" accept="audio/*"><div class="music-controls"><button id="play">▶ Play</button><button class="secondary" id="stop">■ Stop</button></div><p class="hint">Your selected music file stays on your device; it is not uploaded.</p><audio id="audio" loop></audio></section>
+</div>
+<section class="card" style="margin-top:16px"><h2>🪄 Birthday effects playground</h2><p class="hint">Customize the countdown, confetti and effects. Drag balloons and pop bubbles below!</p>
+<div class="grid"><div>
+<label for="design">Countdown design</label><select id="design"><option value="tiles">Party tiles</option><option value="classic">Classic</option><option value="neon">Neon glow</option><option value="compact">Compact</option></select>
+<label for="pattern">Confetti pattern</label><select id="pattern"><option value="mixed">Mixed shapes</option><option value="circles">Circles</option><option value="stars">Stars</option><option value="squares">Squares</option></select>
+<label for="palette">Confetti colors</label><select id="palette"><option value="rainbow">Rainbow</option><option value="pink">Pink party</option><option value="cool">Cool colors</option><option value="gold">Gold celebration</option></select>
+<label for="intensity">Celebration intensity: <span id="intensityValue">3</span>/5</label><input id="intensity" type="range" min="1" max="5" value="3">
+</div><div>
+<div class="actions"><button id="randomEffect">🎲 Random effect</button><button class="secondary" id="randomParty">🎉 Random celebration</button><button id="ultimate">🚀 Ultimate Celebration Mode</button></div>
+<div class="actions"><button class="secondary" id="fireworks">🎆 Launch fireworks</button><button class="secondary" id="bubbles">🫧 Add bubbles</button><button class="secondary" id="balloons">🎈 Add balloons</button></div>
+<div class="actions"><button class="secondary" id="flipCard">💌 Flip birthday card</button></div></div></div>
+<p class="hint" id="unlock" aria-live="polite">Visual effect unlocks appear here as your birthday gets closer.</p>
+<div class="birthday-card" id="birthdayCard" role="button" tabindex="0" aria-label="Flip birthday card"><div class="card-inner"><div class="card-front"><span style="font-size:3rem">💌</span><strong>A little birthday surprise</strong><small>Tap to open</small></div><div class="card-back"><span style="font-size:3rem">🎂🎉</span><strong>YOU’RE AMAZING!</strong><small>Let the celebration begin!</small></div></div></div>
+<div id="playground" aria-label="Interactive birthday playground"></div>
+</section><footer>Made for birthday celebrations ✨</footer></main>
+<script>
+(()=>{const $=id=>document.getElementById(id),get=k=>{try{return localStorage.getItem(k)}catch{return null}},save=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
+const date=$('birthDate'),year=$('birthYear');if(get('bd-date'))date.value=get('bd-date');if(get('bd-year'))year.value=get('bd-year');if(get('bd-theme')){$('theme').value=get('bd-theme');document.body.dataset.theme=get('bd-theme')}
+const parts=()=>{const [y,m,d]=date.value.split('-').map(Number);return{m,d}};
+function nextDate(){const p=parts(),n=new Date();let t=new Date(n.getFullYear(),p.m-1,p.d);if(t<=n)t=new Date(n.getFullYear()+1,p.m-1,p.d);return t}
+function ordinal(n){let x=n%100;if(x>=11&&x<=13)return'th';return({1:'st',2:'nd',3:'rd'}[n%10]||'th')}
+function age(){const y=Number(year.value),p=parts(),n=new Date();if(!year.value||!Number.isInteger(y)||y<1900||y>n.getFullYear()){$('ageText').textContent='Add your birth year below to show your birthday age.';return}let a=n.getFullYear()-y;if(n.getMonth()+1<p.m||(n.getMonth()+1===p.m&&n.getDate()<p.d))a--;$('ageText').innerHTML='You are celebrating your <strong>'+(a+1)+ordinal(a+1)+' birthday</strong> next time!'}
+function tick(){if(!date.value)return;let n=new Date(),t=nextDate(),s=Math.max(0,Math.floor((t-n)/1000));[['days',Math.floor(s/86400)],['hours',String(Math.floor(s%86400/3600)).padStart(2,'0')],['minutes',String(Math.floor(s%3600/60)).padStart(2,'0')],['seconds',String(s%60).padStart(2,'0')]].forEach(([id,v])=>{let e=$(id),v2=String(v);if(e.textContent!==v2){e.textContent=v2;e.classList.remove('flip');void e.offsetWidth;e.classList.add('flip')}});let p=parts();let today=n.getMonth()+1===p.m&&n.getDate()===p.d;$('message').textContent=today?'🎉 IT’S YOUR BIRTHDAY! HAVE THE BEST DAY! 🎉':'Your birthday party is coming up!';age()}
+date.addEventListener('change',()=>{save('bd-date',date.value);tick();unlock()});year.addEventListener('change',()=>{save('bd-year',year.value);age()});tick();setInterval(tick,1000);
+const canvas=$('confetti'),ctx=canvas.getContext('2d');let pieces=[],running=false;function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}addEventListener('resize',resize);resize();
+function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;let k=+$('intensity').value,pal={rainbow:['#ff5ca8','#8b5cf6','#38bdf8','#fbbf24','#34d399'],pink:['#ff5ca8','#ff8fc9','#f9a8d4','#c084fc'],cool:['#38bdf8','#818cf8','#67e8f9','#a5b4fc'],gold:['#fbbf24','#f59e0b','#fff1a8','#fff7d6']}[$('palette').value],shape=$('pattern').value;pieces=Array.from({length:50*k},()=>({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.5,vx:(Math.random()-.5)*5,vy:2+Math.random()*5,size:4+Math.random()*7,spin:Math.random()*6,shape:shape==='mixed'?['square','circle','star'][Math.floor(Math.random()*3)]:({circles:'circle',stars:'star',squares:'square'})[shape],color:pal[Math.floor(Math.random()*pal.length)]}));if(!running){running=true;requestAnimationFrame(draw)}}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);pieces.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.spin+=.08;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.spin);ctx.fillStyle=p.color;if(p.shape==='circle'){ctx.beginPath();ctx.arc(0,0,p.size/2,0,7);ctx.fill()}else if(p.shape==='star'){ctx.font=p.size*1.8+'px sans-serif';ctx.fillText('✦',-p.size/2,p.size/2)}else ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*.65);ctx.restore()});pieces=pieces.filter(p=>p.y<innerHeight+20);if(pieces.length)requestAnimationFrame(draw);else{running=false;ctx.clearRect(0,0,innerWidth,innerHeight)}}
+function flash(){let e=document.createElement('div');e.className='flash';document.body.append(e);setTimeout(()=>e.remove(),500)}
+function glitter(x,y){for(let i=0;i<18;i++){let a=2*Math.PI*i/18,e=document.createElement('span');e.className='glitter';e.textContent=['✦','✧','✨'][i%3];e.style.left=x+'px';e.style.top=y+'px';e.style.setProperty('--dx',Math.cos(a)*75+'px');e.style.setProperty('--dy',Math.sin(a)*75+'px');document.body.append(e);setTimeout(()=>e.remove(),900)}}
+function emojiParty(){['🎈','🎉','🎊','✨','🎂','⭐','🥳'].forEach((v,i)=>setTimeout(()=>{let e=document.createElement('span');e.className='float';e.textContent=v;e.style.left=Math.random()*92+'vw';document.body.append(e);setTimeout(()=>e.remove(),6000)},i*100))}
+function star(){let e=document.createElement('span');e.className='star';e.style.left=(15+Math.random()*75)+'vw';e.style.top=(5+Math.random()*35)+'vh';document.body.append(e);setTimeout(()=>e.remove(),1200)}
+function firework(x=innerWidth/2,y=innerHeight*.4){let colors=['#ff5ca8','#8b5cf6','#38bdf8','#fbbf24','#34d399'],n=+$('intensity').value*14;for(let i=0;i<n;i++){let a=2*Math.PI*i/n,d=55+Math.random()*100,e=document.createElement('i');e.className='fire';e.style.left=x+'px';e.style.top=y+'px';e.style.color=e.style.background=colors[i%5];e.style.setProperty('--x',Math.cos(a)*d+'px');e.style.setProperty('--y',Math.sin(a)*d+'px');document.body.append(e);setTimeout(()=>e.remove(),1000)}flash()}
+$('celebrate').onclick=()=>{confetti();flash();emojiParty();glitter(innerWidth/2,innerHeight/2)};$('intensity').oninput=e=>$('intensityValue').textContent=e.target.value;
+$('notify').onclick=async()=>{if(!('Notification'in window)){alert('Notifications are not supported here.');return}let p=await Notification.requestPermission();if(p==='granted'){new Notification('Birthday countdown is ready! 🎂',{body:'Let’s celebrate your special day!'});$('notify').textContent='✓ Alert enabled'}else alert('Notifications were not enabled. You can change this in browser settings.')};
+let audio=$('audio'),url=null;$('musicFile').onchange=e=>{if(url)URL.revokeObjectURL(url);if(e.target.files[0]){url=URL.createObjectURL(e.target.files[0]);audio.src=url}};$('play').onclick=()=>{if(!audio.src){alert('Choose an audio file first.');return}audio.play().catch(()=>alert('Could not play that file.'))};$('stop').onclick=()=>{audio.pause();audio.currentTime=0};
+let applied='party',presets={party:['#ff6fae','#ffe0ef'],purple:['#a78bfa','#e9ddff'],blue:['#60a5fa','#d9f1ff'],sunset:['#fb923c','#ffe0bd']};
+$('preview').onclick=()=>{let t=$('theme').value;document.body.dataset.theme=t;document.documentElement.style.setProperty('--pink',presets[t][0]);$('themeStatus').textContent='Previewing '+$('theme').selectedOptions[0].text+'. Press Apply to save.'};
+$('apply').onclick=()=>{applied=$('theme').value;document.body.dataset.theme=applied;document.documentElement.style.setProperty('--pink',presets[applied][0]);document.documentElement.style.setProperty('--soft',({party:'#fff0f7',purple:'#f0edff',blue:'#eaf6ff',sunset:'#fff1e5'})[applied]);save('bd-theme',applied);$('accent').value=presets[applied][0];$('bg').value=presets[applied][1];$('themeStatus').textContent='Theme applied!'};
+$('customColors').onclick=()=>{document.documentElement.style.setProperty('--pink',$('accent').value);document.documentElement.style.setProperty('--soft',$('bg').value);document.body.style.background='linear-gradient(135deg,'+$('bg').value+',#f4e5ff,#dff5ff)';$('themeStatus').textContent='Custom colors applied!'};
+$('design').onchange=e=>$('countdown').className='countdown '+(e.target.value==='tiles'?'':e.target.value);
+function effectRandom(){[star,emojiParty,firework,confetti,flash][Math.floor(Math.random()*5)]()}
+$('randomEffect').onclick=effectRandom;$('randomParty').onclick=()=>{let a=[()=>{confetti();emojiParty()},()=>{firework();star()},()=>{flash();glitter(innerWidth/2,innerHeight/2)},()=>document.body.classList.toggle('rainbow')];a[Math.floor(Math.random()*a.length)]()};
+$('fireworks').onclick=()=>firework();$('ultimate').onclick=()=>{document.body.classList.add('ultimate','rainbow');confetti();emojiParty();flash();firework(innerWidth*.25,innerHeight*.35);firework(innerWidth*.75,innerHeight*.4);for(let i=0;i<5;i++)setTimeout(star,i*180);setTimeout(()=>document.body.classList.remove('ultimate','rainbow'),8000)};
+$('flipCard').onclick=()=> $('birthdayCard').classList.toggle('flipped');$('birthdayCard').onclick=()=> $('birthdayCard').classList.toggle('flipped');$('birthdayCard').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('birthdayCard').classList.toggle('flipped')}};
+const playground=$('playground');function balloon(){let b=document.createElement('span');b.className='balloon';b.textContent='🎈';b.style.left=Math.random()*Math.max(20,playground.clientWidth-60)+'px';b.style.top=Math.random()*70+'px';playground.append(b);let drag=false,dx=0,dy=0;b.onpointerdown=e=>{drag=true;b.setPointerCapture(e.pointerId);let r=b.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top};b.onpointermove=e=>{if(!drag)return;let r=playground.getBoundingClientRect();b.style.left=Math.max(0,Math.min(playground.clientWidth-45,e.clientX-r.left-dx))+'px';b.style.top=Math.max(0,Math.min(playground.clientHeight-55,e.clientY-r.top-dy))+'px'};b.onpointerup=()=>drag=false}
+function bubble(){let b=document.createElement('button');b.className='bubble';b.setAttribute('aria-label','Pop bubble');b.style.left=Math.random()*Math.max(10,playground.clientWidth-60)+'px';b.style.top=Math.random()*70+'px';b.onclick=()=>{b.style.transform='scale(1.8)';b.style.opacity=0;setTimeout(()=>b.remove(),200)};playground.append(b)}
+$('balloons').onclick=balloon;$('bubbles').onclick=bubble;
+let last=0;addEventListener('pointerdown',e=>glitter(e.clientX,e.clientY));addEventListener('pointermove',e=>{let n=Date.now();if(n-last>80&&(e.pointerType==='touch'||e.buttons)){last=n;let p=document.createElement('span');p.className='glitter';p.textContent='✧';p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';p.style.setProperty('--dx','8px');p.style.setProperty('--dy','-25px');document.body.append(p);setTimeout(()=>p.remove(),850)}});
+setInterval(star,2600);setInterval(()=>{if(document.hidden)return;let e=document.createElement('span');e.className='snow';e.textContent='❄';e.style.left=Math.random()*100+'vw';e.style.setProperty('--drift',(Math.random()*140-70)+'px');document.body.append(e);setTimeout(()=>e.remove(),9000)},850);
+function unlock(){let d=Math.ceil((nextDate()-new Date())/86400000);$('unlock').textContent=d>30?'🔒 More birthday magic unlocks in '+(d-30)+' days!':d>7?'⭐ Shooting stars and extra sparkles unlocked!':d>1?'🎆 Fireworks unlocked! Your birthday is close!':d===1?'🚀 Ultimate Celebration Mode unlocked — TOMORROW!':'🥳 IT’S YOUR BIRTHDAY! Everything is unlocked!';}
+unlock();setInterval(unlock,60000);
+function birthdayCheck(){let n=new Date(),p=parts(),key='bd-celebrated-'+n.getFullYear();if(n.getMonth()+1===p.m&&n.getDate()===p.d&&get(key)!=='yes'){save(key,'yes');confetti();emojiParty();flash();let e=document.createElement('div');e.className='big';e.innerHTML='<div><div style="font-size:clamp(3rem,12vw,7rem)">🎆🎂🎉</div><h2>HAPPY<br>BIRTHDAY!</h2><p style="font-size:1.4rem;font-weight:800">Today is YOUR day!</p><button>Let’s celebrate!</button></div>';e.querySelector('button').onclick=()=>e.remove();document.body.append(e)}}birthdayCheck();setInterval(birthdayCheck,60000);
+})();
+</script></body></html>
